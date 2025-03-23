@@ -1,0 +1,51 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+  }
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header,
+.footer {
+  min-height: 50px; /* Ensures they don’t collapse */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bgg-color);
+}
+
+.content {
+  flex-grow: 1; /* Takes up remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  margin: 8px;
+}
+
+.links a {
+  margin: 0 12px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+}
