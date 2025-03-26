@@ -32,7 +32,7 @@ main {
   align-items: center;
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 24px;
   margin: 8px;
 }
 
