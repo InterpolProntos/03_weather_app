@@ -15,10 +15,16 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/toggle.css" />
+    <link rel="stylesheet" href="styles/list.css" />
     <script defer src="scripts/darkmode.js"></script>
     <script defer src="scripts/projectLink.js"></script>
+    <script defer src="scripts/addCards.js"></script>
   </head>
   <body>
     <header>
@@ -32,7 +38,33 @@
       </div>
     </header>
     <main>
-      <h1>Weather App</h1>
+      <div id="totalCount" style="display: none">0</div>
+      <div class="main-container">
+        <h2>Weather App</h2>
+        <div class="input-container">
+          <input
+            type="text"
+            id="cardInput"
+            placeholder="Add a new location..."
+          />
+          <button id="addCardButton">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <ul id="cardList" class="card-list">
+          <!-- <li>
+            <div class="card-header">Porto</div>
+            <div class="card-body">
+              <div class="current-temp">12º</div>
+              <div class="max-min">20º/9º Feels like 11º</div>
+              <button class="delete-button">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </li> -->
+          <!-- Cards will be added dynamically -->
+        </ul>
+      </div>
     </main>
     <footer>
       <div class="footerNote">
