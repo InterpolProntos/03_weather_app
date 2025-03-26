@@ -29,6 +29,7 @@ main {
 }
 
 .links {
+  align-items: center;
   display: flex;
   justify-content: center;
   gap: 12px;
