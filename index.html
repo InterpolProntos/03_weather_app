@@ -15,10 +15,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/toggle.css" />
     <link rel="stylesheet" href="styles/list.css" />
@@ -38,32 +35,19 @@
       </div>
     </header>
     <main>
-      <div id="totalCount" style="display: none">0</div>
-      <div class="main-container">
+      <div class="container">
         <h2>Weather App</h2>
-        <div class="input-container">
+        <div class="input-group">
           <input
             type="text"
-            id="cardInput"
-            placeholder="Add a new location..."
+            id="locationInput"
+            placeholder="Enter location name..."
           />
-          <button id="addCardButton">
+          <button id="addButton">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </button>
         </div>
-        <ul id="cardList" class="card-list">
-          <!-- <li>
-            <div class="card-header">Porto</div>
-            <div class="card-body">
-              <div class="current-temp">12º</div>
-              <div class="max-min">20º/9º Feels like 11º</div>
-              <button class="delete-button">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </button>
-            </div>
-          </li> -->
-          <!-- Cards will be added dynamically -->
-        </ul>
+        <div id="cardGrid" class="card-grid"></div>
       </div>
     </main>
     <footer>

@@ -1,37 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  --input-border: #ccc;
-  --button-bg: #007bff;
-  --card-bg: #e3f2fd;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #0e0f0f;
+  --border: #e2e8f0;
+  --accent: #3b82f6;
+
+  /* Weather-specific colors */
+  --sunny-bg: #fefce8;
+  --sunny-border: #fef08a;
+  --sunny-icon: #eab308;
+
+  --cloudy-bg: #f8fafc;
+  --cloudy-border: #e2e8f0;
+  --cloudy-icon: #64748b;
+
+  --rainy-bg: #eff6ff;
+  --rainy-border: #bfdbfe;
+  --rainy-icon: #3b82f6;
+
+  --snowy-bg: #f1f5f9;
+  --snowy-border: #e2e8f0;
+  --snowy-icon: #94a3b8;
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  flex: 1 0 auto;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 body.dark {
-  --bg-color: #121212;
-  --text-color: #ffffff;
-  --input-border: #444;
-  --button-bg: #2196f3;
-  --card-bg: #1e3a5f;
+  --bg-primary: #000000;
+  --bg-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --border: #334155;
+  --accent: #60a5fa;
+
+  --sunny-bg: #422006;
+  --sunny-border: #854d0e;
+  --sunny-icon: #facc15;
+
+  --cloudy-bg: #1e293b;
+  --cloudy-border: #334155;
+  --cloudy-icon: #94a3b8;
+
+  --rainy-bg: #172554;
+  --rainy-border: #1e40af;
+  --rainy-icon: #60a5fa;
+
+  --snowy-bg: #1e293b;
+  --snowy-border: #334155;
+  --snowy-icon: #cbd5e1;
 }
 
 main {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 3rem;
+
+    max-height: 900px;
+    margin: auto;
+  }
+
+  h2 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-primary);
+  }
 }
 
 .links {
@@ -43,7 +100,7 @@ main {
 }
 
 .links a {
-  color: var(--text-color);
+  color: var(--text-primary);
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
@@ -60,4 +117,10 @@ main {
 .footerNote {
   text-align: center;
   margin: 8px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
+  justify-self: anchor-center;
 }

@@ -5,6 +5,7 @@ const mockedData = [
     maxTemperature: 25,
     minTemperature: 15,
     feelsLike: 22,
+    weather: "sunny",
   },
   {
     title: "Madrid",
@@ -12,6 +13,7 @@ const mockedData = [
     maxTemperature: 30,
     minTemperature: 20,
     feelsLike: 27,
+    weather: "rainy",
   },
   {
     title: "Paris",
@@ -19,6 +21,7 @@ const mockedData = [
     maxTemperature: 20,
     minTemperature: 10,
     feelsLike: 17,
+    weather: "cloudy",
   },
   {
     title: "Berlin",
@@ -26,6 +29,7 @@ const mockedData = [
     maxTemperature: 15,
     minTemperature: 5,
     feelsLike: 12,
+    weather: "snowy",
   },
   {
     title: "London",
@@ -33,6 +37,7 @@ const mockedData = [
     maxTemperature: 10,
     minTemperature: 0,
     feelsLike: 7,
+    weather: "rainy",
   },
   {
     title: "Rome",
@@ -40,99 +45,141 @@ const mockedData = [
     maxTemperature: 35,
     minTemperature: 25,
     feelsLike: 32,
+    weather: "cloudy",
   },
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
-  const cardInput = document.getElementById("cardInput");
-  const addCardButton = document.getElementById("addCardButton");
-  const cardList = document.getElementById("cardList");
+  // Initialize Lucide icons
+  lucide.createIcons();
 
-  // Add card action
-  const addCardAction = () => {
-    const cardText = cardInput.value.trim();
-    if (cardText === "") return;
+  // Weather cards handling
+  const cardGrid = document.getElementById("cardGrid");
+  const locationInput = document.getElementById("locationInput");
+  const addButton = document.getElementById("addButton");
 
-    addCardToList(cardText);
-    cardInput.value = "";
-    saveCards();
+  // Load saved cards from localStorage
+  const savedCards = JSON.parse(localStorage.getItem("weatherCards") || "[]");
+
+  // Weather icons mapping
+  const weatherIcons = {
+    sunny: "sun",
+    cloudy: "cloud",
+    rainy: "cloud-rain",
+    snowy: "snowflake",
   };
 
-  addCardButton.addEventListener("click", () => {
-    addCardAction();
-  });
+  function createWeatherCard(data) {
+    const card = document.createElement("div");
+    card.className = "weather-card";
+    card.setAttribute("data-weather", data.weather);
 
-  cardInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      addCardAction();
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-btn";
+    deleteBtn.innerHTML = "X";
+    deleteBtn.onclick = () => {
+      card.remove();
       saveCards();
-    }
-  });
-
-  const addCardToList = (cardText) => {
-    const countElement = document.getElementById("totalCount");
-    const count = parseInt(countElement.textContent);
-    countElement.textContent = count + 1;
-
-    const li = document.createElement("li");
-    const title = document.createElement("div");
-    const body = document.createElement("div");
-    const currentTemp = document.createElement("div");
-    const maxMin = document.createElement("div");
-    const deleteButton = document.createElement("button");
-    const icon = document.createElement("i");
-
-    // Setup content
-    const data = mockedData[count] || {
-      title: cardText,
-      temperature: "?",
-      maxTemperature: "?",
-      minTemperature: "?",
-      feelsLike: "?",
     };
-    title.textContent = cardText;
-    title.classList.add("card-header");
-    body.classList.add("card-body");
-    currentTemp.textContent = `${data.temperature}°C`;
-    currentTemp.classList.add("current-temp");
-    maxMin.textContent = `${data.maxTemperature}°C/${data.minTemperature}°C Feels like ${data.feelsLike}°C`;
-    maxMin.classList.add("max-min");
 
-    // Setup Delete
-    icon.classList.add("fa", "fa-trash");
-    icon.setAttribute("aria-hidden", "true");
-    deleteButton.classList.add("delete-button");
-    deleteButton.appendChild(icon);
-    deleteButton.addEventListener("click", () => {
-      li.remove();
-      saveCards();
-    });
+    const header = document.createElement("div");
+    header.className = "card-header";
 
-    body.appendChild(currentTemp);
-    body.appendChild(maxMin);
-    body.appendChild(deleteButton);
-    li.appendChild(title);
-    li.appendChild(body);
-    cardList.appendChild(li);
-  };
+    const location = document.createElement("span");
+    location.className = "location";
+    location.textContent = data.title;
 
-  const saveCards = () => {
-    const cards = [];
-    document.querySelectorAll("#cardList li").forEach((li) => {
-      cards.push({
-        title: li.querySelector(".card-header").textContent,
-      });
-    });
-    localStorage.setItem("cards", JSON.stringify(cards));
-  };
+    const weatherIcon = document.createElement("i");
+    weatherIcon.className = "weather-icon";
+    weatherIcon.setAttribute("data-lucide", weatherIcons[data.weather]);
 
-  // Load cards from localStorage
-  function loadCards() {
-    const savedCards = JSON.parse(localStorage.getItem("cards") || "[]");
-    savedCards.forEach((card) => {
-      addCardToList(card.title);
-    });
+    const temperature = document.createElement("div");
+    temperature.className = "temperature";
+    temperature.textContent = `${data.temperature}°C`;
+
+    const details = document.createElement("div");
+    details.className = "details";
+
+    const minMax = document.createElement("div");
+    minMax.className = "detail-row";
+    minMax.innerHTML = `
+        <span>Min/Max</span>
+        <span>${data.minTemperature}°C/${data.maxTemperature}°C</span>
+    `;
+
+    const feelsLike = document.createElement("div");
+    feelsLike.className = "detail-row";
+    feelsLike.innerHTML = `
+        <div style="display:flex;align-items:center;gap:0.25rem">
+          <i data-lucide="thermometer-sun"></i>
+          <span>Feels like</span>
+        </div>
+        <span>${data.feelsLike}°C</span>
+    `;
+
+    header.appendChild(deleteBtn);
+    header.appendChild(location);
+    header.appendChild(weatherIcon);
+    details.appendChild(minMax);
+    details.appendChild(feelsLike);
+
+    card.appendChild(header);
+    card.appendChild(temperature);
+    card.appendChild(details);
+
+    return card;
   }
 
-  loadCards();
+  function saveCards() {
+    const cards = Array.from(cardGrid.children).map((card) => ({
+      title: card.querySelector(".location").textContent,
+      temperature: parseInt(card.querySelector(".temperature").textContent),
+      maxTemperature: parseInt(
+        card
+          .querySelector(".detail-row")
+          .lastElementChild.textContent.split("/")[1]
+      ),
+      minTemperature: parseInt(
+        card
+          .querySelector(".detail-row")
+          .lastElementChild.textContent.split("/")[0]
+      ),
+      feelsLike: parseInt(
+        card.querySelectorAll(".detail-row")[1].lastElementChild.textContent
+      ),
+      weather: card.getAttribute("data-weather"),
+    }));
+
+    localStorage.setItem("weatherCards", JSON.stringify(cards));
+  }
+
+  function addNewCard() {
+    const location = locationInput.value.trim();
+    if (!location) return;
+
+    const mockIndex = cardGrid.children.length % mockedData.length;
+    const newCardData = {
+      ...mockedData[mockIndex],
+      title: location,
+    };
+
+    cardGrid.appendChild(createWeatherCard(newCardData));
+    locationInput.value = "";
+    lucide.createIcons();
+    saveCards();
+  }
+
+  // Event listeners
+  addButton.addEventListener("click", addNewCard);
+  locationInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") addNewCard();
+  });
+
+  // Initialize saved cards
+  savedCards.forEach((cardData) => {
+    cardGrid.appendChild(createWeatherCard(cardData));
+  });
+
+  // Initialize icons for the initial cards
+  lucide.createIcons();
 });
